@@ -22,7 +22,7 @@ run-tsung: $(TSUNG)/bin/tsung tsung/tsung.xml
 		cd tsung/log/$$L && \
 		../../../$(TSUNG)/lib/tsung/bin/tsung_stats.pl --dygraph --title "Tsung $$L" && \
 		cd ../.. && \
-		rm latest && ln -vs log/$$L latest && \
+		rm -f latest && ln -vs log/$$L latest && \
 		echo open tsung/latest/report.html
 
 include erlang.mk
