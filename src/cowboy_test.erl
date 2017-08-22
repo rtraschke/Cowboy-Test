@@ -1,7 +1,6 @@
 -module(cowboy_test).
 -behaviour(cowboy_loop_handler).
 
--export([run/0, run/1]).
 -export([init/3, info/3, terminate/3]).
 
 -record(state, {
@@ -9,22 +8,6 @@
 	start_time_ms,
 	tref
 }).
-
-run() -> run(100).
-
-run(NumAcceptors) ->
-	{ok, _} = application:ensure_all_started(cowboy_test),
-	Dispatch = cowboy_router:compile([
-		%% {HostMatch, list({PathMatch, Handler, Opts})}
-		{'_', [{'_', ?MODULE, []}]}
-	]),
-	%% Name, NbAcceptors, TransOpts, ProtoOpts
-	cowboy:start_http(cowboy_test_listener,
-		NumAcceptors,
-		[{port, 8080}, {max_connections, infinity}],
-		[{env, [{dispatch, Dispatch}]}]
-	).
-
 
 %% Request Handler
 
