@@ -22,7 +22,7 @@ $ ../../../tsung-1.6.0/lib/tsung/bin/tsung_stats.pl --dygraph
 $ open report.html
 ```
 
-The above is encapsulated in the `runtsung` make target.
+The above is encapsulated in the `run-tsung` make target.
 
 Possible pre-requisites
 ```shell

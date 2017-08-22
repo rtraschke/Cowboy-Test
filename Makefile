@@ -15,7 +15,7 @@ $(TSUNG)/.dummy: $(TSUNG).tar.gz
 $(TSUNG).tar.gz:
 	curl -O  http://tsung.erlang-projects.org/dist/$(TSUNG).tar.gz
 
-runtsung: $(TSUNG)/bin/tsung tsung/tsung.xml
+run-tsung: $(TSUNG)/bin/tsung tsung/tsung.xml
 	$(TSUNG)/bin/tsung -f tsung/tsung.xml -l tsung/log start
 	@ L=`ls -r tsung/log |head -1` ;\
 		echo Generating report in tsung/log/$$L && \
