@@ -1,8 +1,10 @@
 PROJECT = cowboy_test
-PROJECT_DESCRIPTION = New project
+PROJECT_DESCRIPTION = Cowboy Test
 PROJECT_VERSION = 0.1.0
 
 DEPS = cowboy
+
+include erlang.mk
 
 TSUNG=tsung-1.6.0
 
@@ -24,5 +26,3 @@ run-tsung: $(TSUNG)/bin/tsung tsung/tsung.xml
 		cd ../.. && \
 		rm -f latest && ln -vs log/$$L latest && \
 		echo open tsung/latest/report.html
-
-include erlang.mk
