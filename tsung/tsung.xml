@@ -9,10 +9,10 @@
   </clients>
   
   <!-- Server side setup -->
-<servers>
-  <server host="localhost" port="8080" type="tcp" />
-  <server host="localhost" port="8443" type="ssl" />
-</servers>
+  <servers>
+    <server host="localhost" port="8080" type="tcp" />
+    <!-- <server host="ec2-34-248-55-148.eu-west-1.compute.amazonaws.com" port="8080" type="tcp" /> -->
+  </servers>
 
   <!-- to start os monitoring (cpu, network, memory). Use an erlang
   agent on the remote machine or SNMP. erlang is the default --> 

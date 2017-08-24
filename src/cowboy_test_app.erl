@@ -4,11 +4,12 @@
 -export([start/2, stop/1]).
 
 start(_Type, _Args) ->
-	{ok, _} = run(),
+	run(),
 	cowboy_test_sup:start_link().
 
 stop(_State) ->
-	ok = finish().
+	finish(),
+	ok.
 
 
 -define(HTTP_SERVER, cowboy_test_listener).
@@ -22,11 +23,14 @@ run(NumAcceptors) ->
 		{'_', [{'_', cowboy_test, []}]}
 	]),
 	%% Name, NbAcceptors, TransOpts, ProtoOpts
+	lager:info("HTTP server starting."),
 	{ok, _} = cowboy:start_http(?HTTP_SERVER,
 		NumAcceptors,
 		[{port, 8080}, {max_connections, infinity}],
 		[{env, [{dispatch, Dispatch}]}]
 	),
+	lager:info("HTTP server started."),
+	lager:info("HTTPS server starting."),
 	{ok, _} = cowboy:start_https(?HTTPS_SERVER,
 		NumAcceptors,
 		[{port, 8443},
@@ -35,8 +39,13 @@ run(NumAcceptors) ->
 		 {keyfile, "certs/iosport.co.uk.key"}
 		],
 		[{env, [{dispatch, Dispatch}]}]
-	).
+	),
+	lager:info("HTTPS server started.").
 
 finish() ->
+	lager:info("HTTPS server stopping."),
 	ok = cowboy:stop_listener(?HTTPS_SERVER),
-	ok = cowboy:stop_listener(?HTTP_SERVER).
+	lager:info("HTTPS server stopped."),
+	lager:info("HTTP server stopping."),
+	ok = cowboy:stop_listener(?HTTP_SERVER),
+	lager:info("HTTP server stopped.").

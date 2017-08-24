@@ -2,9 +2,12 @@ PROJECT = cowboy_test
 PROJECT_DESCRIPTION = Cowboy Test
 PROJECT_VERSION = 0.1.0
 
-DEPS = cowboy
+DEPS = cowboy lager
 
 include erlang.mk
+
+ERLC_OPTS += +'{parse_transform, lager_transform}'
+
 
 selfcert: certs/iosport.co.uk.key certs/iosport.co.uk.cert
 
