@@ -11,7 +11,8 @@ stop(_State) ->
 	ok = finish().
 
 
--define(WEBSERVER, cowboy_test_listener).
+-define(HTTP_SERVER, cowboy_test_listener).
+-define(HTTPS_SERVER, cowboy_test_ssl_listener).
 
 run() -> run(100).
 
@@ -21,11 +22,21 @@ run(NumAcceptors) ->
 		{'_', [{'_', cowboy_test, []}]}
 	]),
 	%% Name, NbAcceptors, TransOpts, ProtoOpts
-	cowboy:start_http(?WEBSERVER,
+	{ok, _} = cowboy:start_http(?HTTP_SERVER,
 		NumAcceptors,
 		[{port, 8080}, {max_connections, infinity}],
+		[{env, [{dispatch, Dispatch}]}]
+	),
+	{ok, _} = cowboy:start_https(?HTTPS_SERVER,
+		NumAcceptors,
+		[{port, 8443},
+		 {max_connections, infinity},
+		 {certfile, "certs/iosport.co.uk.cert"},
+		 {keyfile, "certs/iosport.co.uk.key"}
+		],
 		[{env, [{dispatch, Dispatch}]}]
 	).
 
 finish() ->
-	cowboy:stop_listener(?WEBSERVER).
+	ok = cowboy:stop_listener(?HTTPS_SERVER),
+	ok = cowboy:stop_listener(?HTTP_SERVER).
