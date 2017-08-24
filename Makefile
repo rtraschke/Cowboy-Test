@@ -2,7 +2,7 @@ PROJECT = cowboy_test
 PROJECT_DESCRIPTION = Cowboy Test
 PROJECT_VERSION = 0.1.0
 
-DEPS = cowboy lager folsom
+DEPS = cowboy lager folsom folsom_cowboy
 
 include erlang.mk
 
