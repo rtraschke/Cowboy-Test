@@ -4,11 +4,13 @@
 -export([start/2, stop/1]).
 
 start(_Type, _Args) ->
+	folsom_metrics:new_counter(num_requests),
 	run(),
 	cowboy_test_sup:start_link().
 
 stop(_State) ->
 	finish(),
+	lager:info("Outstanding requests: ~p.", [folsom_metrics:get_metric_value(num_requests)]),
 	ok.
 
 
