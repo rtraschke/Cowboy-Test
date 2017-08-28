@@ -29,7 +29,7 @@ Possible pre-requisites
 $ sudo cpan Template::Toolkit
 ```
 
-The Tsung [sample report](https://rtraschke.github.io/Cowboy-Test/tsung/sample/report.html) for ramping from 200 through to 450 new requests per second on my MacBook Pro (2 GHz Core i7, 16GB), running the Cowboy Test server and the Tsung test on the same machine (Erlang 19.3, ulimit -n 9000), is not very representative.
+The Tsung [sample report](https://rtraschke.github.io/Cowboy-Test/tsung/sample/report.html) shows the results of running 50 requests each for 20K concurrent users (starting 1000 per second) on an Amazon AWS EC2 m4.xlarge running Ubuntu.
 
 
 Setup an AWS EC2 (ami-a8d2d7ce)
