@@ -2,7 +2,9 @@ PROJECT = cowboy_test
 PROJECT_DESCRIPTION = Cowboy Test
 PROJECT_VERSION = 0.1.0
 
-DEPS = cowboy lager folsom folsom_cowboy
+DEPS = cowboy lager folsom folsom_cowboy folsom_graphite
+
+dep_folsom_graphite = git git@github.com:chef/folsom_graphite.git master
 
 include erlang.mk
 
