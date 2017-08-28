@@ -5,6 +5,7 @@
 
 start(_Type, _Args) ->
 	folsom_metrics:new_counter(num_requests),
+	folsom_metrics:new_histogram(request_time, uniform, 1028),
 	run(),
 	cowboy_test_sup:start_link().
 

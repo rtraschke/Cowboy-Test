@@ -17,16 +17,17 @@ init(_, Req, _Opts) ->
 	{URL, Req2} = cowboy_req:url(Req),
 	{loop, Req2, #state{
 		url = URL,
-		start_time_ms = erlang:system_time(milli_seconds),
+		start_time_ms = erlang:system_time(millisecond),
 		tref = TRef
 	}}.
 
 info(timeout, Req, State=#state{url = URL, start_time_ms = Start}) ->
-	End = erlang:system_time(milli_seconds),
+	Dur = erlang:system_time(milli_seconds) - Start,
 	{ok, Req2} = cowboy_req:reply(200,
 		[{<<"content-type">>, <<"text/plain">>}],
-		io_lib:format("~p ms: ~p ~p~n", [End-Start, URL, folsom_metrics:get_metric_value(num_requests)]),
+		io_lib:format("~p ms: ~p ~p~n", [Dur, URL, folsom_metrics:get_metric_value(num_requests)]),
 		Req),
+	folsom_metrics:notify({request_time, Dur}),
 	{ok, Req2, State}.
 
 terminate(_Reason, _Req, _State) ->
