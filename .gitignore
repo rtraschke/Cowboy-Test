@@ -10,7 +10,7 @@ rel/example_project
 .rebar
 cowboy_test.d
 .erlang.mk
-tsung-*
+tsung-1.6.0*
 tsung/latest
 tsung/log
 _rel

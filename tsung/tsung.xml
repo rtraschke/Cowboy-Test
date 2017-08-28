@@ -11,7 +11,7 @@
   <!-- Server side setup -->
   <servers>
     <server host="localhost" port="8080" type="tcp" />
-    <!-- <server host="ec2-34-248-55-148.eu-west-1.compute.amazonaws.com" port="8080" type="tcp" /> -->
+    <!-- SSL: <server host="localhost" port="8443" type="ssl" /> -->
   </servers>
 
   <!-- to start os monitoring (cpu, network, memory). Use an erlang
@@ -24,33 +24,28 @@
   <!-- several arrival phases can be set: for each phase, you can set
   the mean inter-arrival time between new clients and the phase
   duration -->
-   <arrivalphase phase="1" duration="10" unit="second">
-     <users arrivalrate="200" unit="second" />
-   </arrivalphase>
-   <arrivalphase phase="2" duration="10" unit="second">
-     <users arrivalrate="250" unit="second" />
-   </arrivalphase>
-   <arrivalphase phase="3" duration="10" unit="second">
-     <users arrivalrate="300" unit="second" />
-   </arrivalphase>
-   <arrivalphase phase="4" duration="10" unit="second">
-     <users arrivalrate="350" unit="second" />
-   </arrivalphase>
-   <arrivalphase phase="5" duration="10" unit="second">
-     <users arrivalrate="400" unit="second" />
-   </arrivalphase>
-   <arrivalphase phase="6" duration="10" unit="second">
-     <users arrivalrate="450" unit="second" />
-   </arrivalphase>
+    <arrivalphase phase="1" duration="60" unit="second">
+      <users maxnumber="40000" arrivalrate="1000" unit="second"/>
+      <!-- SSL: <users maxnumber="12000" arrivalrate="400" unit="second"/> -->
+    </arrivalphase>
   </load>
+
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
 
   <!-- start a session for a http user. the probability is the
   frequency of this type os session. The sum of all session's
   probabilities must be 100 -->
 
  <sessions>
-  <session name="http-example" probability="100" type="ts_http">
-    <request> <http url="/foobar" method="GET" version="1.1" /> </request>
-  </session>
+    <session name="http-example" probability="100" type="ts_http">
+      <for from="1" to="50" incr="1" var="i">
+        <request>
+          <http url="/foobar/%%_i%%" method="GET" version="1.1"/>
+        </request>
+      </for>
+    </session>
  </sessions>
+
 </tsung>
